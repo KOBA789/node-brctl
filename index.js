@@ -22,8 +22,9 @@ Bridge.create = function (brname) {
   }
 };
 
-Bridge.prototype.remove = function () {
+Bridge.prototype.destroy = function () {
   assert.strictEqual(typeof this._brname, 'string');
+
   var ret = brctlBinding.deleteBridge(this._brname);
   if (ret === 0) {
     return new Bridge(this._brname);
@@ -38,35 +39,63 @@ Bridge.all = function () {
   });
 };
 
-Bridge.prototype.getPorts = function () {
+Bridge.prototype.addNetIf = function (netif) {
+  assert(netif instanceof NetIf);
+
+  var ret = brctlBinding.addInterface(netif.getName());
+  if (ret === 0) {
+    return netif;
+  } else {
+    throw new Error(error(ret));
+  }
+};
+
+Bridge.prototype.removeNetIf = function (netif) {
+  assert(netif instanceof NetIf);
+
+  var ret = brctlBinding.deleteInterface(netif.getName());
+  if (ret === 0) {
+    return netif;
+  } else {
+    throw new Error(error(ret));
+  }
+};
+
+Bridge.prototype.getNetIfs = function () {
   assert.strictEqual(typeof this._brname, 'string');
+
   return brctlBinding.getPorts(this._brname).map(function (ifname) {
-    return new NetworkInterface(ifname);
+    return new NetIf(ifname);
   });  
 };
 
 Bridge.prototype.getName = function () {
   assert.strictEqual(typeof this._brname, 'string');
+
   return this._brname;
 };
 
 Bridge.prototype.toString = function () {
   assert.strictEqual(typeof this._brname, 'string');
+
   return ['[', this._brname, ' Brigde]'].join('');
 };
 
-function NetworkInterface (ifname) {
+function NetIf (ifname) {
   assert.strictEqual(typeof ifname, 'string');
+
   this._ifname = ifname;
 }
 
-NetworkInterface.prototype.getName = function () {
+NetIf.prototype.getName = function () {
   assert.strictEqual(typeof this._ifname, 'string');
+
   return this._ifname;
 };
 
-NetworkInterface.prototype.toString = function () {
+NetIf.prototype.toString = function () {
   assert.strictEqual(typeof this._ifname, 'string');
+
   return ['[', this._ifname, ' NetworkInterface]'].join('');
 };
 
@@ -88,4 +117,4 @@ brctl.shutdown = function () {
 };
 
 brctl.Bridge = Bridge;
-brctl.NetworkInterface = NetworkInterface;
+brctl.NetIf = NetIf;
