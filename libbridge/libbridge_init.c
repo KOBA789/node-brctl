@@ -30,7 +30,7 @@
 
 int br_socket_fd = -1;
 
-// to use test
+// used in test
 int br_hello(void)
 {
   printf("hello by libbridge\n");

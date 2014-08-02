@@ -89,7 +89,7 @@ extern "C" {
     unsigned char hairpin_mode;
   };
 
-  extern int br_hello(void); // to use test
+  extern int br_hello(void); // used in test
   extern int br_init(void);
   extern int br_refresh(void);
   extern void br_shutdown(void);
