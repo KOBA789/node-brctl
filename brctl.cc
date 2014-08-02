@@ -5,6 +5,8 @@
 
 using namespace v8;
 
+#define STATIC_METHOD(name) exports->Set(NanNew<String>(#name), NanNew<FunctionTemplate>(name)->GetFunction())
+
 // function sayHello () { return 'world'; }
 NAN_METHOD(sayHello) {
   NanScope();
@@ -40,13 +42,22 @@ NAN_METHOD(addBridge) {
   NanReturnValue(NanNew<Integer>(ret));
 }
 
-void init(Handle<Object> exports) {
-  // exports.hello = sayHello;
-  exports->Set(NanSymbol("hello"), NanNew<FunctionTemplate>(sayHello)->GetFunction());
+NAN_METHOD(deleteBridge) {
+  NanScope();
 
-  exports->Set(NanSymbol("init"), NanNew<FunctionTemplate>(init_)->GetFunction());
-  exports->Set(NanSymbol("shutdown"), NanNew<FunctionTemplate>(shutdown)->GetFunction());
-  exports->Set(NanSymbol("addBridge"), NanNew<FunctionTemplate>(addBridge)->GetFunction());
+  String::Utf8Value str(args[0]->ToString());
+
+  int ret = br_del_bridge(*str);
+
+  NanReturnValue(NanNew<Integer>(ret));
+}
+
+void init(Handle<Object> exports) {
+  STATIC_METHOD(sayHello);
+  STATIC_METHOD(init_);
+  STATIC_METHOD(shutdown);
+  STATIC_METHOD(addBridge);
+  STATIC_METHOD(deleteBridge);
 }
 
 // module name is brctl
