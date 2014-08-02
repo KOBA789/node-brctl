@@ -1,5 +1,5 @@
 {
-  "name": "node-brctl",
+  "name": "brctl",
   "version": "0.0.0",
   "description": "libbrige binding for Node.js",
   "main": "index.js",
