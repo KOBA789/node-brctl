@@ -1,0 +1,1 @@
+cmd_Release/obj.target/bridge.a := rm -f Release/obj.target/bridge.a && ar crs Release/obj.target/bridge.a Release/obj.target/libbridge/libbridge_devif.o Release/obj.target/libbridge/libbridge_if.o Release/obj.target/libbridge/libbridge_init.o Release/obj.target/libbridge/libbridge_misc.o

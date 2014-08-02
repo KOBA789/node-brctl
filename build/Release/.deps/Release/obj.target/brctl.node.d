@@ -1,0 +1,1 @@
+cmd_Release/obj.target/brctl.node := flock ./Release/linker.lock g++ -shared -pthread -rdynamic -m64  -Wl,-soname=brctl.node -o Release/obj.target/brctl.node -Wl,--start-group Release/obj.target/brctl/brctl.o Release/obj.target/bridge.a -Wl,--end-group 

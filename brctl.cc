@@ -1,11 +1,15 @@
 #include <node.h>
 #include <nan.h>
 
+#include "libbridge.h"
+
 using namespace v8;
 
 // function sayHello () { return 'world'; }
 NAN_METHOD(sayHello) {
   NanScope();
+
+  br_hello();
 
   NanReturnValue(NanSymbol("hello world"));
 }
