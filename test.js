@@ -13,7 +13,7 @@ try {
   assert.deepEqual(brctl.getPorts('br0'), ['eth0']);
   assert(brctl.deleteInterface('br0', 'eth0') === 0);
 } catch (err) {
-  console.error(err);
+  console.error(err.stack);
 } finally {
   assert(brctl.deleteBridge('br0') === 0);
   assert(brctl.deleteBridge('br1') === 0);
