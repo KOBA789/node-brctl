@@ -1,0 +1,24 @@
+{
+  "name": "node-brctl",
+  "version": "0.0.0",
+  "description": "libbrige binding for Node.js",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "install": "node-gyp rebuild"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/KOBA789/node-brctl.git"
+  },
+  "author": "KOBA789 (Hidekazu Kobayashi)",
+  "license": "GPL",
+  "gypfile": true,
+  "bugs": {
+    "url": "https://github.com/KOBA789/node-brctl/issues"
+  },
+  "homepage": "https://github.com/KOBA789/node-brctl",
+  "dependencies": {
+    "nan": "^1.3.0"
+  }
+}
