@@ -8,7 +8,9 @@ var brctl = module.exports = {};
 
 function Bridge (brname) {
   assert.strictEqual(typeof brname, 'string');
+
   this._brname = brname;
+  return this;
 }
 
 Bridge.create = function (brname) {
@@ -27,7 +29,7 @@ Bridge.prototype.destroy = function () {
 
   var ret = brctlBinding.deleteBridge(this._brname);
   if (ret === 0) {
-    return new Bridge(this._brname);
+    return;
   } else {
     throw new Error(error(ret));
   }
@@ -42,7 +44,7 @@ Bridge.all = function () {
 Bridge.prototype.addNetIf = function (netif) {
   assert(netif instanceof NetIf);
 
-  var ret = brctlBinding.addInterface(netif.getName());
+  var ret = brctlBinding.addInterface(this.getName(), netif.getName());
   if (ret === 0) {
     return netif;
   } else {
@@ -53,7 +55,7 @@ Bridge.prototype.addNetIf = function (netif) {
 Bridge.prototype.removeNetIf = function (netif) {
   assert(netif instanceof NetIf);
 
-  var ret = brctlBinding.deleteInterface(netif.getName());
+  var ret = brctlBinding.deleteInterface(this.getName(), netif.getName());
   if (ret === 0) {
     return netif;
   } else {
@@ -75,6 +77,12 @@ Bridge.prototype.getName = function () {
   return this._brname;
 };
 
+Bridge.prototype.equals = function (br) {
+  assert(br instanceof Bridge);
+
+  return this.getName() === br.getName();
+};
+
 Bridge.prototype.toString = function () {
   assert.strictEqual(typeof this._brname, 'string');
 
@@ -91,6 +99,12 @@ NetIf.prototype.getName = function () {
   assert.strictEqual(typeof this._ifname, 'string');
 
   return this._ifname;
+};
+
+NetIf.prototype.equals = function (netif) {
+  assert(netif instanceof NetIf);
+
+  return this.getName() === netif.getName();
 };
 
 NetIf.prototype.toString = function () {
