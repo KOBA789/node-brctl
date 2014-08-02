@@ -7,6 +7,9 @@
         "<!(node -e \"require('nan')\")",
         "libbridge"
       ],
+      "cflags": [
+        "-std=c++11"
+      ],
       "dependencies": [ "libbridge" ]
     },
     {
